@@ -1310,6 +1310,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
+async def auto_seed():
+    await seed()
+
+@app.on_event("startup")
 async def ensure_client_colors():
     palette = ["#C97F87", "#8B7EA8", "#8A9B8E", "#C4A77D", "#5C6B7A", "#B0766A"]
     clients = await db.clients.find({}, {"_id": 0}).to_list(1000)
